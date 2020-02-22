@@ -8,6 +8,8 @@ class App extends Component {
 
   }
 
+
+
  
 
 
@@ -16,7 +18,7 @@ class App extends Component {
 
 
     //.then promise 
-    axios.get('https://listen-api.listennotes.com/api/v2/search?q=star%20wars&show_podcasts=1&show_genres=1&safe_mode=1',{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
+    axios.get('https://listen-api.listennotes.com/api/v2/search?q=nutrition&type=episode&len_min=4&len_max=6&language=English',{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
       console.log(res)
         this.setState({
           podcasts:res.data.results
@@ -29,22 +31,27 @@ class App extends Component {
     // response.toJSON();
   
   }
+
+  // 1. use math.random to pick a random podcast???
   
 
   showThePodcasts = (parameter) => { 
     return parameter.map(eachPodcast => {
+      console.log(eachPodcast)
       return (
-
-        <audio controls>
+      <div>
+      <img src={eachPodcast.image} alt={eachPodcast.title_original}/>
+      <p>{eachPodcast.title_original}</p>
+      <audio controls>
         <source src={eachPodcast.audio} type="audio/mpeg" />
       </audio>
+      </div>
       )
     })
   }
 
 
   render() {
-    console.log(this.state)
     return (
       <div>
      
