@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import './App.css';
-import Shortbreak from './components/Shortbreak';
-import Longbreak from './components/Longbreak';
-import { TaskTimer } from 'tasktimer';
 
-
-
-
-
-class App extends Component {
+class Shortbreak extends Component {
 
   state = {
     podcasts: [],
@@ -111,27 +103,22 @@ console.log('submit button is being pressed')
 }
 
 
-// timer = () => {
-// const timer = new TaskTimer(1000);
-// timer.add(task => console.log(`Current runs: ${task.currentRuns}`)).start();
 
-// }
+
+
+
 
 
   render() {
     // console.log(this.state.name) //WHY IS THIS UNDEFINED???
     return (
       <div>
-  {/* <form onSubmit={this.submitting}>
+  <form onSubmit={this.submitting}>
   <label>Enter your podcast category below (podcast will be in between 4-6 minutes for your short break)</label><br/>
   <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
   <input type="submit" value="Submit"/>
     </form>
-        {this.showThePodcasts(this.state.podcasts)} */}
-{/* 
-      {this.timer} */}
-      <Shortbreak/>
-      <Longbreak/>
+        {this.showThePodcasts(this.state.podcasts)}
       </div>
     );
   }
@@ -139,4 +126,4 @@ console.log('submit button is being pressed')
 
 
 
-export default App;
+export default Shortbreak;

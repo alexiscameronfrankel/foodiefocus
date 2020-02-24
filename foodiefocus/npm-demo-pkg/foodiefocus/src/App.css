@@ -29,3 +29,19 @@
 }
 
  */
+
+ .flexin{
+   display:flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+
+   
+ }
+
+ .paddingTime{
+   margin:50px 200px;
+ }
+
+ .audioStyle {
+   width:100%;
+ }
