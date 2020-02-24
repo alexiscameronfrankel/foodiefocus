@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import axios from "axios"
+import axios from "axios";
 import './App.css';
 import Shortbreak from './components/Shortbreak';
 import Longbreak from './components/Longbreak';
-import { TaskTimer } from 'tasktimer';
+import Timer from 'react-compound-timer'
+
 
 
 
@@ -132,6 +133,33 @@ console.log('submit button is being pressed')
       {this.timer} */}
       <Shortbreak/>
       <Longbreak/>
+      <Timer
+    initialTime={60000}
+    direction="backward"
+    startImmediately={false}
+    timeToUpdate={100}
+>
+    {({ start, resume, pause, stop, reset }) => (
+        <React.Fragment>
+            <div>
+                {/* <Timer.Days /> days
+                <Timer.Hours /> hours */}
+                <Timer.Minutes /> minutes
+                <Timer.Seconds /> seconds
+                {/* <Timer.Milliseconds /> milliseconds */}
+            </div>
+            {/* <div>{timerState}</div> */}
+            <br />
+            <div>
+                <button onClick={start}>Start</button>
+                <button onClick={pause}>Pause</button>
+                <button onClick={resume}>Resume</button>
+                <button onClick={stop}>Stop</button>
+                <button onClick={reset}>Reset</button>
+            </div>
+        </React.Fragment>
+    )}
+</Timer>
       </div>
     );
   }
