@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Timer from 'react-compound-timer'
 
 let alarm = new Audio("./alarm.mp3")
+let pomodoro = 0
 
 class Pomodorocountdown extends Component {
 
@@ -24,11 +25,11 @@ alarm.play();
     checkpoints={[
         {
             time: 0,
-            callback: () => this.playAlarm(),
+            callback: () => this.playAlarm(), 
         },
         {
-            time: 54000,
-            callback: () => console.log('Checkpoint B'),
+            time: 0,
+            callback: () =>console.log(pomodoro = pomodoro + 1),
         }
     ]}
 >

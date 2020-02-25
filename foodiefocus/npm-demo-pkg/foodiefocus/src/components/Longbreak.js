@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 class Longbreak extends Component {
     state = {
         podcasts: [],
+        jokes: [],
         name: "",
         image: "",
         title_original:"",
@@ -22,10 +23,24 @@ class Longbreak extends Component {
               podcasts:res.data.results
             }) 
         })
+
+
+
+
+      ///HERE IS THE JOKES API GET REQUEST///
+      
+
+        axios.get(`https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=nsfw,racist,sexist&type=single`).then(res => { //This takes some time by the time it gets back 
+        console.log(res)
+          this.setState({
+            jokes:res.data.joke
+          }) 
+      })
       
       }
-      
-    
+
+
+
     
     
       // 1. use math.random to pick a random podcast???
@@ -138,6 +153,8 @@ class Longbreak extends Component {
         <div className="flexin">
             {this.showThePodcasts(this.state.podcasts)}
         </div>
+
+        <p> {this.state.jokes}</p>
 
           </div>
         );
