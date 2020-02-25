@@ -9,38 +9,34 @@ class Longbreak extends Component {
         name: "",
         image: "",
         title_original:"",
-        audio:""
-    
+        audio:"",
+     
       }
     
-    //right now category is defined as something that won't populate any results, but this is a messy fix
-      async componentDidMount(){
-        //console.log('happens once on mount')
-        //.then promise
-        axios.get(`https://listen-api.listennotes.com/api/v2/search?q=gfhgcv&sort_by_date=0&type=episode&len_min=9&len_max=11&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
-          console.log(res)
-            this.setState({
-              podcasts:res.data.results
-            }) 
-        })
+     componentDidMount(){
+
+//this gets an initial joke
+        this.getAJoke() //equivalent to clicking the button
+
+      }
 
 
+   
 
+ 
+      getAJoke = () => {
 
-      ///HERE IS THE JOKES API GET REQUEST///
-      
+        ///HERE IS THE JOKES API GET REQUEST///
 
         axios.get(`https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=nsfw,racist,sexist&type=single`).then(res => { //This takes some time by the time it gets back 
         console.log(res)
-          this.setState({
-            jokes:res.data.joke
-          }) 
-      })
-      
-      }
-
-
-
+                this.setState({
+                jokes:res.data.joke
+                    }) 
+                })
+    
+        console.log(this.state.jokes)
+    }
     
     
       // 1. use math.random to pick a random podcast???
@@ -103,16 +99,14 @@ class Longbreak extends Component {
     
     submitting = (e) => {
       e.preventDefault()
-      this.setState({
-            
-            
-        name:e.target.value
+      // this.setState({}
+      //   name:e.target.value
         
     
     
-      }) 
+      // }) 
     console.log(this.state.name)
-    console.log('submit button is being pressed')
+    console.log('submit button is being pressed?????')
     
     
     
@@ -124,7 +118,6 @@ class Longbreak extends Component {
       // console.log(res)
         this.setState({
           podcasts:res.data.results,
-          name: "",
           image: "",
           title_original:"",
           audio:""
@@ -154,7 +147,7 @@ class Longbreak extends Component {
             {this.showThePodcasts(this.state.podcasts)}
         </div>
 
-        <p> {this.state.jokes}</p>
+        <button onClick={this.getAJoke}>Click here to LOL</button>
 
           </div>
         );
@@ -164,3 +157,4 @@ class Longbreak extends Component {
     
 
 export default Longbreak;
+

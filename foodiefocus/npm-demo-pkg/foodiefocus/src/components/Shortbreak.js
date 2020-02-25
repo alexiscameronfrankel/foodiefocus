@@ -71,14 +71,14 @@ class Shortbreak extends Component {
 
 submitting = (e) => {
   e.preventDefault()
-  this.setState({
+  // this.setState({
         
         
-    name:e.target.value
+  //   name:e.target.value
     
 
 
-  }) 
+  // }) 
 console.log(this.state.name)
 console.log('submit button is being pressed')
 
@@ -92,7 +92,6 @@ console.log('submit button is being pressed')
   // console.log(res)
     this.setState({
       podcasts:res.data.results,
-      name: "",
       image: "",
       title_original:"",
       audio:""
