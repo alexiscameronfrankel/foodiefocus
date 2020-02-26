@@ -18,58 +18,33 @@ class App extends Component {
     name: "",
     image: "",
     title_original:"",
-    audio:""
+    audio:"",
+    pomodoro: 0
 
   }
 
 
 
-
-//right now category is defined as something that won't populate any results, but this is a messy fix
-  async componentDidMount(){
-    //console.log('happens once on mount')
-    //.then promise
-    axios.get(`https://listen-api.listennotes.com/api/v2/search?q=gfhgcv&sort_by_date=0&type=episode&len_min=4&len_max=6&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
-      console.log(res)
-        this.setState({
-          podcasts:res.data.results
-        }) 
-    })
+changeRenderPomodoroAmount = () => {
+  let incrementedPomodoro = this.state.pomodoro + 1
+  this.setState({
+          
+          
+      pomodoro: incrementedPomodoro
   
-  }
   
+  })
+}
 
 
+  handlePersonInputting = (input) => {
 
-  // 1. use math.random to pick a random podcast???
-
-
-  
-
-  showThePodcasts = (parameter) => { 
-    // console.log(this.state)
-    // console.log('showThePodcasts kind of works')
-    return parameter.map(eachPodcast => {
-      // console.log(eachPodcast)
-      return (
-      <div>
-      <img src={eachPodcast.image} alt={eachPodcast.title_original}/>
-      <p>{eachPodcast.title_original}</p>
-      <audio controls>
-        <source src={eachPodcast.audio} type="audio/mpeg" />
-      </audio>
-      </div>
-      )
-    })
-  }
-
-
-  handlePersonTyping = (e) => {
+    console.log("you submitted from home")
     
     this.setState({
         
         
-        [e.target.name]:e.target.value,
+        category: input
     
     
     }) 
@@ -101,48 +76,31 @@ console.log('submit button is being pressed')
 
   if(this.state.name !== "") {
 
-  axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${category}&sort_by_date=0&type=episode&len_min=4&len_max=6&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
-  // console.log(res)
-    this.setState({
-      podcasts:res.data.results,
-      name: "",
-      image: "",
-      title_original:"",
-      audio:""
-    }) 
-  })
-}
+    axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${category}&sort_by_date=0&type=episode&len_min=4&len_max=6&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
+    // console.log(res)
+      this.setState({
+        podcasts:res.data.results,
+        name: "",
+        image: "",
+        title_original:"",
+        audio:""
+      }) 
+    })
+  }
 
 }
-
-
-// timer = () => {
-// const timer = new TaskTimer(1000);
-// timer.add(task => console.log(`Current runs: ${task.currentRuns}`)).start();
-
-// }
 
 
   render() {
-    // console.log(this.state.name) //WHY IS THIS UNDEFINED???
+  
     return (
       <div>
-  {/* <form onSubmit={this.submitting}>
-  <label>Enter your podcast category below (podcast will be in between 4-6 minutes for your short break)</label><br/>
-  <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
-  <input type="submit" value="Submit"/>
-    </form>
-        {this.showThePodcasts(this.state.podcasts)} */}
-{/* 
-      {this.timer} */}
-      {/* <Shortbreak/>
-      <Longbreak/>
-      <Pomodorocountdown/> */}
+
       <Switch>
-          <Route exact path="/" render={props => <Home/>}/> {/* says if url is homepage (/) then just show the home */}
-          <Route exact path="/maintimer" render={props => <Pomodorocountdown {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes}/>}/>
-          <Route exact path="/longbreak" render={props => <Longbreak {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes} />}/>
-          <Route exact path="/shortbreak" render={props => <Shortbreak  {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes} />}/>
+          <Route exact path="/" render={props => <Home {...props} handlePersonInputting={this.handlePersonInputting}/>}/> {/* says if url is homepage (/) then just show the home */}
+          <Route exact path="/maintimer" render={props => <Pomodorocountdown {...props}  allpodcasts={this.state.podcasts} alljokes={this.state.jokes}/>}/>
+          <Route exact path="/longbreak" render={props => <Longbreak {...props} changeRenderPomodoroAmount={this.changeRenderPomodoroAmount} categorychosen={this.state.category} allpodcasts={this.state.podcasts} alljokes={this.state.jokes} />}/>
+          <Route exact path="/shortbreak" render={props => <Shortbreak  {...props} categorychosen={this.state.category} allpodcasts={this.state.podcasts} alljokes={this.state.jokes} />}/>
       </Switch>
 
       

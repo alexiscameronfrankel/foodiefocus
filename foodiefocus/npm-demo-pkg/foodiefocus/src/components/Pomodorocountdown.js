@@ -5,18 +5,43 @@ import Button from 'react-bootstrap/Button'
 
 
 let alarm = new Audio("./alarm.mp3")
-let pomodoro = 0;
 
 class Pomodorocountdown extends Component {
+
+    state = {
+        pomodoro: 0
+    }
 
     playAlarm = () => {
     alarm.play();
     }
 
+changeRenderPomodoroAmount = () => {
+    let incrementedPomodoro = this.state.pomodoro + 1
+    this.setState({
+            
+            
+        pomodoro: incrementedPomodoro
+    
+    
+    })
+}
+
+
+// BELOW IS WHERE WE ARE RENDERING
 
     render() {
         return (
      <div>
+
+
+        {/* HERE  A BUTTON THAT LINKS TO THE HOME PAGE TO CHANGE CATEGORY  */}
+
+
+        <Link to="/"> <Button variant="primary">CHANGE CATEGORY</Button></Link>
+
+
+        {/* BELOW IS MY Timer */}
 
         <Timer
             initialTime={10000}
@@ -30,11 +55,11 @@ class Pomodorocountdown extends Component {
                 },
                 {
                     time: 0,
-                    callback: () =>pomodoro = pomodoro + 1,
+                    callback: () =>this.changeRenderPomodoroAmount(),
                 },
                 {
                     time: 0,
-                    callback: () =>console.log(`You have done ${pomodoro} pomodoros`),
+                    callback: () =>console.log(`You have done ${this.state.pomodoro} pomodoros`),
                 }
             ]}
         >
@@ -62,12 +87,21 @@ class Pomodorocountdown extends Component {
 
 
 
+ {/* HERE IS WHERE I DISPLAY THE POMODOROS */}
 
 
-            {/* <Button Link to=<Shortbreak/>></div>Short Break</Button> */}
+
+<p>You have done {this.state.pomodoro} pomodoros</p>
+
+
+
+
+
+{/* HERE ARE MY BREAK BUTTONS */}
             
             <Link to="/longbreak"><Button size="lg" variant="danger">Long Break</Button></Link>
             <Link to="/shortbreak"><Button size="lg" variant="warning">Short Break</Button></Link>
+
             
                 
             </div>

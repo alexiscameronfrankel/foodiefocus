@@ -21,9 +21,29 @@ class Longbreak extends Component {
     
      componentDidMount(){
 
-//this gets an initial joke
+      // doing a get request based on the catergory that was entered in Home component
+      console.log("we are mounting, yeeha!")
+      console.log(this.props)
+      this.newGetRequestForPodcast()
+
+        //this gets an initial joke
         this.getAJoke() //equivalent to clicking the button
 
+      } 
+
+      newGetRequestForPodcast = () => {
+        if(this.props.categorychosen !== "") {
+          
+          axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${this.props.categorychosen}&sort_by_date=0&type=episode&len_min=9&len_max=11&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
+          // console.log(res)
+            this.setState({
+              podcasts:res.data.results,
+              image: "",
+              title_original:"",
+              audio:""
+            }) 
+          })
+        }
       }
 
 
@@ -83,54 +103,60 @@ class Longbreak extends Component {
       }
     
     
-      handlePersonTyping = (e) => {
+    //   handlePersonTyping = (e) => {
         
-        this.setState({
+    //     this.setState({
             
             
-            [e.target.name]:e.target.value,
+    //         [e.target.name]:e.target.value,
         
         
-        }) 
+    //     }) 
     
         
-    }
+    // }
+    
+
+
     
     
-    
-    
-    /// BUGS: on second press...name becomes ""...on third submit name becomes undefined
-    
-    submitting = (e) => {
-      e.preventDefault()
-      // this.setState({}
-      //   name:e.target.value
+          submitting = (e) => {
+            e.preventDefault()
+            // this.setState({}
+            //   name:e.target.value
+              
+          
+          
+            // }) 
+          console.log(this.state.name)
+          console.log('submit button is being pressed for long break')
+          
+          
+          
+            // let category = this.state.name;
+          
+            if(this.state.name !== "") {
+          
+            axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${this.props.category}&sort_by_date=0&type=episode&len_min=9&len_max=11&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
+            // console.log(res)
+              this.setState({
+                podcasts:res.data.results,
+                image: "",
+                title_original:"",
+                audio:""
+              }) 
+            })
+          }
         
-    
-    
-      // }) 
-    console.log(this.state.name)
-    console.log('submit button is being pressed for long break')
-    
-    
-    
-      let category = this.state.name;
-    
-      if(this.state.name !== "") {
-    
-      axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${category}&sort_by_date=0&type=episode&len_min=9&len_max=11&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
-      // console.log(res)
-        this.setState({
-          podcasts:res.data.results,
-          image: "",
-          title_original:"",
-          audio:""
-        }) 
-      })
-    }
-    
-    }
-    
+        }
+
+
+      
+
+        
+        
+
+
     
     
     
@@ -139,24 +165,24 @@ class Longbreak extends Component {
     
     
       render() {
-        // console.log(this.state.name) //WHY IS THIS UNDEFINED???
+      console.log(this.props)
         return (
           <div>
 
-        {/* HERE IS A BUTTON THAT LINKS TO THE TIMER  */}
+        {/* HERE  A BUTTON THAT LINKS TO THE HOME PAGE TO CHANGE CATEGORY  */}
+
+
+        <Link to="/"> <Button variant="primary">CHANGE CATEGORY</Button></Link>
+
+
+        {/* HERE  A BUTTON THAT LINKS TO THE TIMER  */}
 
 
 
-        <Link to="/maintimer"> <Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
+        <Link to="/maintimer"><Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
 
 
 
-        {/* HERE IS MY FORM FOR PODCASTS */}
-      <form onSubmit={this.submitting}>
-      <label>Enter your podcast category below (podcast will be in between 9-11 minutes for your long break)</label><br/>
-      <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
-      <input type="submit" value="Submit"/>
-        </form>
         <div className="flexin">
             {this.showThePodcasts(this.state.podcasts)}
         </div>
