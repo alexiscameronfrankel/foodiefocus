@@ -98,8 +98,8 @@ console.log('submit button is being pressed')
 
       <Switch>
           <Route exact path="/" render={props => <Home {...props} handlePersonInputting={this.handlePersonInputting}/>}/> {/* says if url is homepage (/) then just show the home */}
-          <Route exact path="/maintimer" render={props => <Pomodorocountdown {...props}  allpodcasts={this.state.podcasts} alljokes={this.state.jokes}/>}/>
-          <Route exact path="/longbreak" render={props => <Longbreak {...props} changeRenderPomodoroAmount={this.changeRenderPomodoroAmount} categorychosen={this.state.category} allpodcasts={this.state.podcasts} alljokes={this.state.jokes} />}/>
+          <Route exact path="/maintimer" render={props => <Pomodorocountdown {...props} pomodoro ={this.state.pomodoro} changeRenderPomodoroAmount={this.changeRenderPomodoroAmount} allpodcasts={this.state.podcasts} alljokes={this.state.jokes}/>}/>
+          <Route exact path="/longbreak" render={props => <Longbreak {...props} categorychosen={this.state.category} allpodcasts={this.state.podcasts} alljokes={this.state.jokes} />}/>
           <Route exact path="/shortbreak" render={props => <Shortbreak  {...props} categorychosen={this.state.category} allpodcasts={this.state.podcasts} alljokes={this.state.jokes} />}/>
       </Switch>
 

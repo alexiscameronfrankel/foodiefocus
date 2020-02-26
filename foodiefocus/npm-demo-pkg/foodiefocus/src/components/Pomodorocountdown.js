@@ -55,11 +55,11 @@ changeRenderPomodoroAmount = () => {
                 },
                 {
                     time: 0,
-                    callback: () =>this.changeRenderPomodoroAmount(),
+                    callback: () =>this.props.changeRenderPomodoroAmount(this.props.pomodoro),
                 },
                 {
                     time: 0,
-                    callback: () =>console.log(`You have done ${this.state.pomodoro} pomodoros`),
+                    callback: () =>console.log(`You have done ${this.props.pomodoro} pomodoros`),
                 }
             ]}
         >
@@ -91,7 +91,7 @@ changeRenderPomodoroAmount = () => {
 
 
 
-<p>You have done {this.state.pomodoro} pomodoros</p>
+<p>You have done {this.props.pomodoro} pomodoros</p>
 
 
 
