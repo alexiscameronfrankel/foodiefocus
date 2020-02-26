@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import axios from "axios"
-import Card from 'react-bootstrap/Card'
+import axios from "axios";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import {
+  Link
+} from "react-router-dom"; 
+
+
 
 class Longbreak extends Component {
     state = {
@@ -34,8 +40,6 @@ class Longbreak extends Component {
                 jokes:res.data.joke
                     }) 
                 })
-    
-        console.log(this.state.jokes)
     }
     
     
@@ -106,7 +110,7 @@ class Longbreak extends Component {
     
       // }) 
     console.log(this.state.name)
-    console.log('submit button is being pressed?????')
+    console.log('submit button is being pressed for long break')
     
     
     
@@ -138,6 +142,16 @@ class Longbreak extends Component {
         // console.log(this.state.name) //WHY IS THIS UNDEFINED???
         return (
           <div>
+
+        {/* HERE IS A BUTTON THAT LINKS TO THE TIMER  */}
+
+
+
+        <Link to="/maintimer"> <Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
+
+
+
+        {/* HERE IS MY FORM FOR PODCASTS */}
       <form onSubmit={this.submitting}>
       <label>Enter your podcast category below (podcast will be in between 9-11 minutes for your long break)</label><br/>
       <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
@@ -147,6 +161,10 @@ class Longbreak extends Component {
             {this.showThePodcasts(this.state.podcasts)}
         </div>
 
+
+        {/* HERE IS THE JOKE BUTTON BELOW */}
+
+        <p>{this.state.jokes}</p>
         <button onClick={this.getAJoke}>Click here to LOL</button>
 
           </div>

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+
 import axios from "axios";
 import './App.css';
+import './components/Home';
 import Shortbreak from './components/Shortbreak';
 import Longbreak from './components/Longbreak';
 import Pomodorocountdown from './components/Pomodorocountdown'
+import {Switch, Route} from "react-router-dom";
+import Home from './components/Home'
 
 
 
@@ -131,9 +135,15 @@ console.log('submit button is being pressed')
         {this.showThePodcasts(this.state.podcasts)} */}
 {/* 
       {this.timer} */}
-      <Shortbreak/>
+      {/* <Shortbreak/>
       <Longbreak/>
-      <Pomodorocountdown/>
+      <Pomodorocountdown/> */}
+      <Switch>
+          <Route exact path="/" render={props => <Home/>}/> {/* says if url is homepage (/) then just show the home */}
+          <Route exact path="/maintimer" render={props => <Pomodorocountdown {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes}/>}/>
+          <Route exact path="/longbreak" render={props => <Longbreak {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes} />}/>
+          <Route exact path="/shortbreak" render={props => <Shortbreak  {...props} allpodcasts={this.state.beers} alljokes={this.state.jokes} />}/>
+      </Switch>
 
       
       </div>

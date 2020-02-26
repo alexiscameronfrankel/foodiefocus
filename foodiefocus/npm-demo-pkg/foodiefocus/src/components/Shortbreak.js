@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import axios from "axios"
+import axios from "axios";
+import {
+  Link
+} from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+
 
 class Shortbreak extends Component {
 
@@ -112,6 +117,16 @@ console.log('submit button is being pressed')
     // console.log(this.state.name) //WHY IS THIS UNDEFINED???
     return (
       <div>
+
+{/* 
+HERE IS MY LINK TO THE THE MAIN TIMER  */}
+
+<Link to="/maintimer"> <Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
+
+{/* 
+HERE IS THE SUBMISSION FORM FOR THE PODCASTS */}
+
+
   <form onSubmit={this.submitting}>
   <label>Enter your podcast category below (podcast will be in between 4-6 minutes for your short break)</label><br/>
   <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
