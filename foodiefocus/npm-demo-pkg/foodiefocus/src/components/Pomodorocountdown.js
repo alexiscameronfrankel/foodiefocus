@@ -55,6 +55,10 @@ changeRenderPomodoroAmount = () => {
                 },
                 {
                     time: 0,
+                    callback: () => console.log('alarm is sounding'), 
+                },
+                {
+                    time: 0,
                     callback: () =>this.props.changeRenderPomodoroAmount(this.props.pomodoro),
                 },
                 {

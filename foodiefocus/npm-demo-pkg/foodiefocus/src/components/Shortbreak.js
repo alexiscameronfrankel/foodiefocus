@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import {
-  Link
-} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import Timer from 'react-compound-timer'
+
+
+
+let alarm = new Audio("./alarm.mp3")
 
 
 class Shortbreak extends Component {
@@ -17,25 +20,56 @@ class Shortbreak extends Component {
 
   }
 
-//right now category is defined as something that won't populate any results, but this is a messy fix
-  async componentDidMount(){
-    //console.log('happens once on mount')
-    //.then promise
-    axios.get(`https://listen-api.listennotes.com/api/v2/search?q=gfhgcv&sort_by_date=0&type=episode&len_min=4&len_max=6&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
-      console.log(res)
-        this.setState({
-          podcasts:res.data.results
-        }) 
-    })
-  
-  }
-  
 
 
+  playAlarm = () => {
+    alarm.play();
+    }
 
-  // 1. use math.random to pick a random podcast???
+    
+    componentDidMount(){
+
+      // doing a get request based on the catergory that was entered in Home component
+      console.log("we are mounting, yeeha!")
+      console.log(this.props)
+      this.newGetRequestForPodcast()
+
+        //this gets an initial joke
+        this.getAJoke() //equivalent to clicking the button
+
+      } 
+
+      newGetRequestForPodcast = () => {
+        if(this.props.categorychosen !== "") {
+          
+          axios.get(`https://listen-api.listennotes.com/api/v2/search?q=${this.props.categorychosen}&sort_by_date=0&type=episode&len_min=9&len_max=11&only_in=title%2Cdescription&language=English`,{headers: {'X-ListenAPI-Key': '4a61357b39b247419a27150332f26732'}}).then(res => { //This takes some time by the time it gets back 
+          // console.log(res)
+            this.setState({
+              podcasts:res.data.results,
+              image: "",
+              title_original:"",
+              audio:""
+            }) 
+          })
+        }
+      }
 
 
+   
+
+ 
+      getAJoke = () => {
+
+        ///HERE IS THE JOKES API GET REQUEST///
+
+        axios.get(`https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=nsfw,racist,sexist&type=single`).then(res => { //This takes some time by the time it gets back 
+        console.log(res)
+                this.setState({
+                jokes:res.data.joke
+                    }) 
+                })
+    }
+    
   
 
   showThePodcasts = (parameter) => { 
@@ -54,20 +88,6 @@ class Shortbreak extends Component {
       )
     })
   }
-
-
-  handlePersonTyping = (e) => {
-    
-    this.setState({
-        
-        
-        [e.target.name]:e.target.value,
-    
-    
-    }) 
-
-    
-}
 
 
 
@@ -123,15 +143,57 @@ HERE IS MY LINK TO THE THE MAIN TIMER  */}
 
 <Link to="/maintimer"> <Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
 
-{/* 
-HERE IS THE SUBMISSION FORM FOR THE PODCASTS */}
 
+  {/* BELOW IS MY Timer */}
 
-  <form onSubmit={this.submitting}>
-  <label>Enter your podcast category below (podcast will be in between 4-6 minutes for your short break)</label><br/>
-  <input type="text" id="fname" name="name" onChange={this.handlePersonTyping}/><br/>
-  <input type="submit" value="Submit"/>
-    </form>
+   <Timer
+            initialTime={10000}
+            direction="backward"
+            startImmediately={false}
+            timeToUpdate={100}
+            checkpoints={[
+                {
+                    time: 0,
+                    callback: () => this.playAlarm(), 
+                },
+                {
+                    time: 0,
+                    callback: () => console.log('alarm is sounding'), 
+                },
+                // {
+                //     time: 0,
+                //     callback: () =>this.props.changeRenderPomodoroAmount(this.props.pomodoro),
+                // },
+                // {
+                //     time: 0,
+                //     callback: () =>console.log(`You have done ${this.props.pomodoro} pomodoros`),
+                // }
+            ]}
+        >
+        {({ start, resume, pause, stop, reset }) => (
+            <React.Fragment>
+                <div>
+                    {/* <Timer.Days /> days
+                    <Timer.Hours /> hours */}
+                    <Timer.Minutes /> minutes
+                    <Timer.Seconds /> seconds
+                    {/* <Timer.Milliseconds /> milliseconds */}
+                </div>
+                {/* <div>{timerState}</div> */}
+                <br />
+                <div>
+                    <button onClick={start}>Start</button>
+                    <button onClick={pause}>Pause</button>
+                    <button onClick={resume}>Resume</button>
+                    <button onClick={stop}>Stop</button>
+                    <button onClick={reset}>Reset</button>
+                </div>
+            </React.Fragment>
+        )}
+    </Timer>
+
+<p>{this.state.jokes}</p>
+        <button onClick={this.getAJoke}>Click here to LOL</button>
         {this.showThePodcasts(this.state.podcasts)}
       </div>
     );

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import {
-  Link
-} from "react-router-dom"; 
+import {Link} from "react-router-dom"; 
+import Timer from 'react-compound-timer'
+
+
+let alarm = new Audio("./alarm.mp3")
 
 
 
@@ -18,6 +20,12 @@ class Longbreak extends Component {
         audio:"",
      
       }
+
+
+      playAlarm = () => {
+        alarm.play();
+        }
+    
     
      componentDidMount(){
 
@@ -175,13 +183,64 @@ class Longbreak extends Component {
         <Link to="/"> <Button variant="primary">CHANGE CATEGORY</Button></Link>
 
 
+         {/* BELOW IS MY Timer */}
+
+   <Timer
+            initialTime={10000}
+            direction="backward"
+            startImmediately={false}
+            timeToUpdate={100}
+            checkpoints={[
+                {
+                    time: 0,
+                    callback: () => this.playAlarm(), 
+                },
+                {
+                    time: 0,
+                    callback: () => console.log('alarm is sounding'), 
+                },
+                // {
+                //     time: 0,
+                //     callback: () =>this.props.changeRenderPomodoroAmount(this.props.pomodoro),
+                // },
+                // {
+                //     time: 0,
+                //     callback: () =>console.log(`You have done ${this.props.pomodoro} pomodoros`),
+                // }
+            ]}
+        >
+        {({ start, resume, pause, stop, reset }) => (
+            <React.Fragment>
+                <div>
+                    {/* <Timer.Days /> days
+                    <Timer.Hours /> hours */}
+                    <Timer.Minutes /> minutes
+                    <Timer.Seconds /> seconds
+                    {/* <Timer.Milliseconds /> milliseconds */}
+                </div>
+                {/* <div>{timerState}</div> */}
+                <br />
+                <div>
+                    <button onClick={start}>Start</button>
+                    <button onClick={pause}>Pause</button>
+                    <button onClick={resume}>Resume</button>
+                    <button onClick={stop}>Stop</button>
+                    <button onClick={reset}>Reset</button>
+                </div>
+            </React.Fragment>
+        )}
+    </Timer>
+
+
+
         {/* HERE  A BUTTON THAT LINKS TO THE TIMER  */}
 
 
 
         <Link to="/maintimer"><Button variant="primary">LINK TO MY MAIN TIMER</Button></Link>
 
-
+        <p>{this.state.jokes}</p>
+        <button onClick={this.getAJoke}>Click here to LOL</button>
 
         <div className="flexin">
             {this.showThePodcasts(this.state.podcasts)}
@@ -190,8 +249,6 @@ class Longbreak extends Component {
 
         {/* HERE IS THE JOKE BUTTON BELOW */}
 
-        <p>{this.state.jokes}</p>
-        <button onClick={this.getAJoke}>Click here to LOL</button>
 
           </div>
         );
