@@ -45,3 +45,9 @@
  .audioStyle {
    width:100%;
  }
+
+ .home_container{
+  margin: auto;
+  position: relative;
+  top:30vh;
+}
